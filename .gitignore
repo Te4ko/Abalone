@@ -1,0 +1,3 @@
+#Files that Git should ignore
+
+*.class
