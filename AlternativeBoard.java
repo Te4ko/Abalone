@@ -3,8 +3,19 @@ package myAbalone.org;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*This Board class consists of three parts:
+ * 	the main method handling the game progress (whose turn it is, if the game has ended etc.)
+ * 	the GUI hubs currently called print and readMove
+ * 	the move methods determining the possible moves
+ * 
+ * 	A move is described by an Array:
+ * 	if the marbles are moved along the common line, the array has four entries:
+ * 	[x,y,dx,dy] where (x,y) is the starting point of the line and [dx,dy] is the vector which the line follows
+ * 	if the marbles form a line which is moved by a broadside move the array has 7 entries
+ * 	[x,y,ox,oy,dx,dy,l] where the line has length l starting at (x,y) and going along (ox,oy) and is moved in the direction of (dx,dy)
+ * */
 
-public class Board {
+public class Board{
     // Just some constants
     final int INVALID = -1;
     final int FREE = 0;
@@ -27,13 +38,12 @@ public class Board {
     int[] selected;	// the current selection of marbles
     int[][] board;	// the current board positions
 
-    // Main responsible for calling the appropriate Methods
+/*    // Main responsible for calling the appropriate Methods
     public static void main(String[] args){
 	Board b = new Board();
 	while(b.getMarbles(1).size() > 8 && b.getMarbles(2).size() > 8){
 	    b.print();
 	    int [] m = readMove();
-	    int[] d = {m[2],m[3]};
 	    if( b.isPossibleMove(m, b.getCPlayer())){
 		b.move(m);
 		b.setCPlayer(3 - b.getCPlayer());
@@ -42,8 +52,8 @@ public class Board {
 		System.out.println("Invalid move");
 	    }
 	}
-    }
-    private boolean isPossibleMove(int[] m, int cPlayer) {
+    }*/
+    public boolean isPossibleMove(int[] m, int cPlayer) {
 	if(m.length == 4){
 	    System.out.println("Line Attempt");
 	    return isPossibleLineMove(m[0], m[1], m[2], m[3], cPlayer);
@@ -76,7 +86,8 @@ public class Board {
 		ret[3] = input.nextInt();
 		ret[4] = input.nextInt();
 		ret[5] = input.nextInt();
-		ret[6] = input.nextInt();}
+		ret[6] = input.nextInt();
+		}
 	} while(ret == null);
 	return ret;
     }
@@ -179,7 +190,7 @@ public class Board {
 	return true;
     }
     // Get the possile moves along a line
-    private ArrayList<int[]> getLineMoves(int player) {
+    public ArrayList<int[]> getLineMoves(int player) {
 	ArrayList<int[]> moves = new ArrayList<int[]>();	// List accumulating all the moves
 	for(int[] marble : getMarbles(player)){			// For every marble of the player
 	    for(int[] d : dir){					// ...check every off the possible directions
