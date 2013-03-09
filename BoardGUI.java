@@ -61,7 +61,7 @@ interface Marble extends BoardInterface{
 	int firstmoved(int i, int j);// returns the left most marble that can
 									// also be moved to i,j from the selected
 
-	void refresh();// due to the current representation (I think it is going to
+	//void refresh();// due to the current representation (I think it is going to
 					// be final) using one board object for both white and black
 					// marbles the pos[][] array needs to be refreshed after a
 					// move is made
@@ -104,7 +104,7 @@ class WhiteMarbles implements Marble {
 	public int getcp()
 	{	return cp;}
 	
-	public void refresh() {
+	/*public void refresh() {
 		int s = 0;
 		for (int p = 0; p < i; p++)
 			for (int q = 0; q < j; q++) {
@@ -119,7 +119,7 @@ class WhiteMarbles implements Marble {
 				}
 			}
 
-	}
+	}*/
 
 	public int[] getPos(int i) {
 		return pos[i];
@@ -300,7 +300,9 @@ class WhiteMarbles implements Marble {
 		if (i >= 9 || j >= 9 || i<0 || j <0) {
 			int current = firstmoved(i, j);
 			board.set(pos[current][0],pos[current][1],-1);
-		} else if (board.get(i, j) == 1) {
+			setkilled();
+		} else if(board.get(i,j)==-2) {setkilled();} 
+		else if (board.get(i, j) == 1) {
 			push(i, j);
 		} else
 			for (int s = 0; s < 3; s++) {
@@ -321,7 +323,7 @@ class WhiteMarbles implements Marble {
 					break;
 				}
 			}
-		refresh();
+		//refresh();
 	}
 
 	public void push(int i, int j) throws InvalidMove {
@@ -414,7 +416,7 @@ class WhiteMarbles implements Marble {
 				throw new InvalidMove();
 		} else
 			throw new InvalidMove();
-		refresh();
+		//refresh();
 	}
 }
 
@@ -457,7 +459,7 @@ class BlackMarbles implements Marble {
 		return cp;
 	}
 	
-	public void refresh() {
+	/*public void refresh() {
 		int s = 0;
 		for (int p = 0; p < i; p++)
 			for (int q = 0; q < j; q++) {
@@ -472,7 +474,7 @@ class BlackMarbles implements Marble {
 				}
 			}
 
-	}
+	}*/
 
 	public int[] getPos(int i) {
 		return pos[i];
@@ -645,7 +647,9 @@ class BlackMarbles implements Marble {
 		if (i >= 9 || j >= 9 || i<0 || j<0) {
 			int current = firstmoved(i, j);
 			board.set(pos[current][0],pos[current][1],1);
-		} else if (board.get(i, j) == -1) {
+			setkilled();
+		} else if(board.get(i, j)==-2) {setkilled();} 
+		else if (board.get(i, j) == -1) {
 			push(i, j);
 		} else
 			for (int s = 0; s < 3; s++) {
