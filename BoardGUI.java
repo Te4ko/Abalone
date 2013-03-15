@@ -1,5 +1,9 @@
 package org;
 
+import java.awt.Container;
+
+import javax.swing.JFrame;
+
 class InvalidMove extends Exception {
 	public InvalidMove() {
 		System.out.println("Invalid move!");
@@ -310,7 +314,7 @@ class WhiteMarbles implements Marble {
 					setPos(temp[s][2], i, j);
 					pos[temp[s][2]][0]=i;
 					pos[temp[s][2]][1]=j;
-					board.print();
+					//BoardGUI.print();
 					if (c > 1) {
 						closest = firstmoved(temp[s][0], temp[s][1]);
 						for (int p = 0; p < 3; p++) {
@@ -625,6 +629,7 @@ class BlackMarbles implements Marble {
 	// move.
 
 	public void move(int i, int j) throws InvalidMove {
+		System.out.println(i+" "+j);
 		System.out.println("In black move");
 		int c = 0;
 		int closest = firstmoved(i, j);
@@ -657,7 +662,7 @@ class BlackMarbles implements Marble {
 					setPos(temp[s][2], i, j);
 					pos[temp[s][2]][0]=i;
 					pos[temp[s][2]][1]=j;
-					board.print();
+					//BoardGUI.print();
 					if (c > 1) {
 						closest = firstmoved(temp[s][0], temp[s][1]);
 						for (int p = 0; p < 3; p++) {
@@ -767,64 +772,75 @@ class BlackMarbles implements Marble {
 }
 
 
-public class BoardGUI {
+public class BoardGUI implements BoardInterface{
+	private static JFrame frame = new JFrame();
+	private static Container contentPane;
+	public static void print(){
+		frame.setTitle("Abalone");
+		frame.setSize(900, 900);
+		contentPane = frame.getContentPane();
+		contentPane.add(new DrawBoard(board));
+		frame.show();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 	public static void main(String[] args){
 		int s = 0;
 		WhiteMarbles white = new WhiteMarbles(9, 9);
 		BlackMarbles black = new BlackMarbles(9, 9);
 		white.select(2,4);
 		try{
-			white.move(3,4);	
+		white.move(3,4);	
 		}catch(InvalidMove e){}
-
+		print();
 		black.select(4,2);
 		black.select(5,2);
 		black.select(6,2);
 		try{
-		    black.move(3,2);
+		black.move(3,2);
 		}catch(InvalidMove e){}
-
+		print();
 		white.select(3,4);
 		white.select(3,5);
 		white.select(3,6);
 		try{
-		    white.move(3,3);
+		white.move(3,3);
 		}catch(InvalidMove e){}
 		black.select(3,0);
 		try{
-		    black.move(3,1);
+		black.move(3,1);
 		}catch(InvalidMove e){}
-
+		print();
 		white.select(3,3);
 		white.select(3,4);
 		white.select(3,5);
 		try{
-		    white.move(3,2);
+		white.move(3,2);
 		}catch(InvalidMove e){}
-		
+		print();
 		white.select(3,2);
 		white.select(3, 3);
 		white.select(3,4);
 		try{
-			white.move(3, 1);
+		white.move(3, 1);
 		}catch (InvalidMove e){}
-		
+		print();
 		white.select(3,1);
 		white.select(3, 2);
 		white.select(3,3);
 		try{
-			white.move(3,4);
+		white.move(3,4);
 		}catch(InvalidMove e){}
-		
+		print();
 		white.select(3,2);
 		white.select(3, 3);
 		white.select(3,4);
 		try{
-			white.move(3,5);
+		white.move(3,5);
 		}catch(InvalidMove e){}
+		print();
 		for(int i=0;i<14;i++){s++; System.out.println(black.getPos(i)[0]+" "+black.getPos(i)[1]+" "+s);}
-		
 	}
 
 }
+//print should be called in Main class after every turn is done
 
